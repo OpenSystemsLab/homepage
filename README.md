@@ -18,5 +18,8 @@ The command bellow will start a web server that serve the site on http://localho
 $ hugo server -D
 ```
 
-## Generate HTML:
+## Customize the site
+
+Open `config.toml` in your text editor, modify as your need
+
 Simply execute `hugo` command in current directory, it will generates the website to the `public/` directory
