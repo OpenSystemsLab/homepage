@@ -1,25 +1,81 @@
-Open Systems Lab
-----------------
+# Open Systems Lab Homepage
 
-## Install Hugo static site generator
-[Getting Started](https://gohugo.io/getting-started/quick-start) w/ Hugo, and follow instruction [here](https://gohugo.io/getting-started/installing) to have Hugo installed on your workstation
+Homepage for Open Systems Lab - AI Infrastructure Consulting & Cloud Solutions
 
-## Clone this project
-```shell
-$ git clone git@github.com:OpenSystemsLab/homepage.git oslab
-$ cd oslab
-$ git submodule update --init
+## Overview
+
+This website showcases Open Systems Lab's expertise in AI infrastructure consulting, Kubernetes, cloud solutions, and DevOps automation. Built with Hugo and the PaperMod theme for optimal performance and professional presentation.
+
+## Technical Details
+
+- **Static Site Generator**: Hugo v0.148.2 (extended)
+- **Theme**: PaperMod
+- **Deployment**: Netlify with GitHub Actions
+- **Build Time**: ~40ms (optimized)
+
+## Quick Start
+
+### Prerequisites
+
+- Hugo v0.148.2+ (extended version)
+- Git
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/opensystemslab/homepage.git
+cd homepage
+
+# Initialize theme submodule
+git submodule update --init --recursive
+
+# Start development server
+hugo server --buildDrafts --buildFuture
 ```
 
-## Run the site localy
-The command bellow will start a web server that serve the site on http://localhost:1313, and watchs for changes to reload the site automatic.
+Site will be available at `http://localhost:1313`
 
-```shell
-$ hugo server -D
+### Production Build
+
+```bash
+# Build optimized site
+hugo --minify --environment production
 ```
 
-## Customize the site
+## Deployment
 
-Open `config.toml` in your text editor, modify as your need
+### Automatic Deployment (Recommended)
 
-Simply execute `hugo` command in current directory, it will generates the website to the `public/` directory
+The site automatically deploys to Netlify via GitHub Actions on pushes to the `master` branch.
+
+**Required Secrets** (in GitHub repository settings):
+- `NETLIFY_AUTH_TOKEN`: Your Netlify authentication token
+- `NETLIFY_SITE_ID`: Your Netlify site ID
+
+### Manual Deployment
+
+1. **Netlify**: Connect repository and set build command to `hugo --minify`
+2. **Vercel**: Zero-config deployment from GitHub
+3. **GitHub Pages**: Enable Pages in repository settings
+
+## Site Structure
+
+- `content/_index.md` - Homepage
+- `content/services.md` - Services overview
+- `content/case-studies.md` - Project case studies
+- `content/about.md` - Company information
+- `config.toml` - Hugo configuration
+- `netlify.toml` - Netlify deployment settings
+
+## Performance
+
+- **Build Time**: ~40ms
+- **Page Count**: 11 pages
+- **Optimizations**: Minified CSS/JS, caching headers, theme optimizations
+
+## Support
+
+For technical issues or content updates:
+- Create GitHub issue
+- Email: hello@opensystemslab.com
