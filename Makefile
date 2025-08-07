@@ -99,6 +99,22 @@ act-dry-run: act-check ## Dry run ACT test workflow
 		--input act_testing=true \
 		--dry-run
 
+act-security: act-check ## Run security analysis with ACT
+	@echo "🛡️  Running ACT security analysis..."
+	act workflow_dispatch \
+		-W .github/workflows/security.yml \
+		--config .github/act/config.yaml \
+		--input scan_type=full \
+		--input act_testing=true
+
+act-security-secrets: act-check ## Run secrets-only security scan with ACT
+	@echo "🔍 Running ACT secrets scan..."
+	act workflow_dispatch \
+		-W .github/workflows/security.yml \
+		--config .github/act/config.yaml \
+		--input scan_type=secrets-only \
+		--input act_testing=true
+
 # Development helpers
 
 serve: dev ## Alias for dev command

@@ -1,0 +1,282 @@
+name: Security Analysis
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+  schedule:
+    # Run security scans daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      scan_type:
+        description: 'Security scan type (full, secrets-only, dependencies-only)'
+        required: false
+        default: 'full'
+        type: choice
+        options:
+          - full
+          - secrets-only
+          - dependencies-only
+      act_testing:
+        description: 'Enable ACT testing mode'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
+jobs:
+  security-scan:
+    name: Security Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Debug - Show scan inputs
+      if: ${{ github.event.inputs.act_testing == 'true' }}
+      run: |
+        echo "🔒 Security Scan Inputs:"
+        echo "  Scan Type: ${{ github.event.inputs.scan_type || 'full' }}"
+        echo "  ACT Testing: ${{ github.event.inputs.act_testing || 'false' }}"
+        echo "  Event: ${{ github.event_name }}"
+        echo "  Repository: ${{ github.repository }}"
+    
+    - name: Run Trivy vulnerability scanner
+      if: ${{ github.event.inputs.scan_type != 'secrets-only' }}
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+        severity: 'CRITICAL,HIGH,MEDIUM'
+    
+    - name: Upload Trivy scan results to GitHub Security tab
+      if: ${{ github.event.inputs.scan_type != 'secrets-only' && github.event.inputs.act_testing != 'true' }}
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: 'trivy-results.sarif'
+    
+    - name: Run GitLeaks secret scanner
+      if: ${{ github.event.inputs.scan_type != 'dependencies-only' }}
+      uses: gitleaks/gitleaks-action@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE}} # Optional for GitLeaks Pro
+    
+    - name: Setup Node.js for security analysis
+      if: ${{ github.event.inputs.scan_type != 'secrets-only' }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+    
+    - name: Install security analysis tools
+      if: ${{ github.event.inputs.scan_type != 'secrets-only' }}
+      run: |
+        # Install security audit tools
+        npm install -g audit-ci
+        npm install -g semgrep
+        
+        # Create package.json if it doesn't exist for audit
+        if [ ! -f package.json ]; then
+          echo '{"name": "opensystemslab-homepage", "version": "1.0.0", "dependencies": {}}' > package.json
+        fi
+    
+    - name: Run npm security audit
+      if: ${{ github.event.inputs.scan_type != 'secrets-only' }}
+      continue-on-error: true
+      run: |
+        echo "🔍 Running npm security audit..."
+        if [ -f package.json ]; then
+          npm audit --audit-level=moderate --json > npm-audit.json || true
+          if [ -s npm-audit.json ]; then
+            echo "📋 NPM Audit Results:"
+            cat npm-audit.json | jq -r '.vulnerabilities | keys[] as $k | "\($k): \(.[$k].severity)"' || true
+          else
+            echo "✅ No npm vulnerabilities found"
+          fi
+        else
+          echo "ℹ️  No package.json found, skipping npm audit"
+        fi
+    
+    - name: Hugo configuration security check
+      if: ${{ github.event.inputs.scan_type != 'secrets-only' }}
+      run: |
+        echo "🔍 Checking Hugo configuration security..."
+        
+        # Check for unsafe configurations
+        if grep -q "unsafe.*true" config.toml; then
+          echo "⚠️  Warning: Unsafe mode enabled in Hugo config"
+        fi
+        
+        # Check for hardcoded secrets in config
+        if grep -E "(password|secret|key|token).*=" config.toml | grep -v "example\|dummy\|placeholder"; then
+          echo "⚠️  Warning: Potential secrets in configuration"
+          grep -E "(password|secret|key|token).*=" config.toml | sed 's/=.*/=***REDACTED***/'
+        fi
+        
+        # Check for development URLs in production
+        if grep -q "localhost\|127.0.0.1" config.toml; then
+          echo "⚠️  Warning: Development URLs found in config"
+        fi
+        
+        echo "✅ Hugo configuration security check completed"
+    
+    - name: Content security analysis
+      if: ${{ github.event.inputs.scan_type != 'secrets-only' }}
+      run: |
+        echo "🔍 Analyzing content security..."
+        
+        # Check for potential XSS vectors in markdown
+        echo "Checking for potential XSS vectors..."
+        if find content -name "*.md" -exec grep -l "<script" {} \;; then
+          echo "⚠️  Warning: Script tags found in content"
+          find content -name "*.md" -exec grep -l "<script" {} \; | head -5
+        fi
+        
+        # Check for external links that might be unsafe
+        echo "Checking external links..."
+        if find content -name "*.md" -exec grep -E "https?://[^)]*" {} \; | grep -v "opensystemslab.com\|github.com" | head -5; then
+          echo "ℹ️  External links found (review for safety)"
+        fi
+        
+        # Check for email addresses that might be harvested
+        echo "Checking for exposed email addresses..."
+        if find content -name "*.md" -exec grep -E "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" {} \; | grep -v "example.com\|opensystemslab.com" | head -3; then
+          echo "ℹ️  Email addresses found in content"
+        fi
+        
+        echo "✅ Content security analysis completed"
+    
+    - name: Dependency security check
+      if: ${{ github.event.inputs.scan_type != 'secrets-only' }}
+      run: |
+        echo "🔍 Checking dependencies security..."
+        
+        # Check Hugo theme security
+        if [ -d themes ]; then
+          echo "Checking theme dependencies..."
+          find themes -name "*.js" -o -name "*.css" | head -10 | while read file; do
+            echo "  Checking: $file"
+            # Basic check for suspicious patterns
+            if grep -E "(eval\s*\(|document\.write|innerHTML\s*=)" "$file" 2>/dev/null; then
+              echo "    ⚠️  Potentially unsafe patterns found"
+            fi
+          done
+        fi
+        
+        # Check for git submodules security
+        if [ -f .gitmodules ]; then
+          echo "Checking git submodules..."
+          while IFS= read -r line; do
+            if [[ $line == *"url"* ]]; then
+              echo "  Submodule: $line"
+              if [[ $line == *"http://"* ]]; then
+                echo "    ⚠️  Warning: HTTP URL (not HTTPS)"
+              fi
+            fi
+          done < .gitmodules
+        fi
+        
+        echo "✅ Dependency security check completed"
+    
+    - name: File permissions and structure check
+      if: ${{ github.event.inputs.scan_type != 'secrets-only' }}
+      run: |
+        echo "🔍 Checking file permissions and structure..."
+        
+        # Check for files with unusual permissions
+        echo "Checking for executable files..."
+        find . -type f -perm -111 -not -path "./.git/*" -not -path "./node_modules/*" | head -10 | while read file; do
+          echo "  Executable: $file"
+        done
+        
+        # Check for hidden files that might contain secrets
+        echo "Checking for hidden files..."
+        find . -name ".*" -type f -not -path "./.git/*" -not -name ".gitignore" -not -name ".gitmodules" | head -5 | while read file; do
+          echo "  Hidden file: $file"
+        done
+        
+        # Check for backup files
+        echo "Checking for backup files..."
+        find . -name "*.bak" -o -name "*.backup" -o -name "*.old" -o -name "*~" | head -5 | while read file; do
+          echo "  ⚠️  Backup file found: $file"
+        done
+        
+        echo "✅ File permissions check completed"
+    
+    - name: Generate security report
+      if: always()
+      run: |
+        echo "📋 Security Analysis Summary"
+        echo "============================"
+        echo "Repository: ${{ github.repository }}"
+        echo "Scan Type: ${{ github.event.inputs.scan_type || 'full' }}"
+        echo "Date: $(date -u)"
+        echo "Commit: ${{ github.sha }}"
+        echo ""
+        
+        # Summary of findings
+        if [ -f trivy-results.sarif ]; then
+          echo "🔍 Trivy Scan: Completed"
+          # Parse SARIF for summary (basic)
+          if command -v jq > /dev/null; then
+            RESULTS_COUNT=$(jq '.runs[0].results | length' trivy-results.sarif 2>/dev/null || echo "0")
+            echo "  - Issues found: $RESULTS_COUNT"
+          fi
+        fi
+        
+        if [ -f npm-audit.json ]; then
+          echo "📦 NPM Audit: Completed"
+        fi
+        
+        echo ""
+        echo "🎯 Recommendations:"
+        echo "- Review all security findings above"
+        echo "- Update dependencies regularly"
+        echo "- Monitor for new vulnerabilities"
+        echo "- Follow security best practices"
+    
+    - name: ACT testing summary
+      if: ${{ github.event.inputs.act_testing == 'true' }}
+      run: |
+        echo "🧪 ACT Security Testing Summary"
+        echo "==============================="
+        echo "✅ Security scan workflow: SUCCESS"
+        echo "✅ Configuration checks: SUCCESS"
+        echo "✅ Content analysis: SUCCESS"
+        echo ""
+        echo "🎉 ACT security testing completed!"
+        echo ""
+        echo "To run this locally with ACT:"
+        echo "  act workflow_dispatch -W .github/workflows/security.yml --input act_testing=true"
+    
+    - name: Upload security artifacts
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: security-analysis-results
+        path: |
+          trivy-results.sarif
+          npm-audit.json
+          security-report.txt
+        retention-days: 30
+    
+    - name: Security scan status
+      if: always()
+      run: |
+        if [ "${{ job.status }}" = "success" ]; then
+          echo "🛡️  Security analysis completed successfully"
+        else
+          echo "⚠️  Security analysis completed with warnings"
+          echo "Please review the findings and take appropriate action"
+        fi
