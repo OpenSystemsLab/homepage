@@ -1,0 +1,31 @@
+# ACT Configuration for Local GitHub Actions Testing
+# Usage: act -W .github/workflows/test.yml --config .github/act/config.yaml
+
+# Platform mappings
+platforms:
+  ubuntu-latest: ghcr.io/catthehacker/ubuntu:act-latest
+  ubuntu-22.04: ghcr.io/catthehacker/ubuntu:act-22.04
+  ubuntu-20.04: ghcr.io/catthehacker/ubuntu:act-20.04
+
+# Default secrets for local testing (use dummy values)
+secrets:
+  GITHUB_TOKEN: dummy_token
+  NETLIFY_AUTH_TOKEN: dummy_netlify_token
+  NETLIFY_SITE_ID: dummy_site_id
+
+# Environment variables
+env:
+  HUGO_VERSION: "0.148.2"
+  NODE_VERSION: "18"
+  CI: true
+
+# Container options
+container-options: >-
+  --rm
+  --network host
+
+# Default workflow dispatch inputs for testing
+inputs:
+  test_mode: "full"
+  act_testing: "true"
+  debug_mode: "true"

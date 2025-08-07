@@ -1,0 +1,253 @@
+name: Test Hugo Site
+
+on:
+  push:
+    branches: [ master, main, develop ]
+  pull_request:
+    branches: [ master, main ]
+  workflow_dispatch:
+    inputs:
+      test_mode:
+        description: 'Test mode (full, build-only, lint-only)'
+        required: false
+        default: 'full'
+        type: choice
+        options:
+          - full
+          - build-only
+          - lint-only
+      act_testing:
+        description: 'Enable ACT testing mode'
+        required: false
+        default: false
+        type: boolean
+      debug_mode:
+        description: 'Enable debug output'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  HUGO_VERSION: '0.148.2'
+  NODE_VERSION: '18'
+
+jobs:
+  test-hugo-build:
+    name: Test Hugo Build
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Debug - Show workflow inputs
+      if: ${{ github.event.inputs.debug_mode == 'true' || github.event.inputs.act_testing == 'true' }}
+      run: |
+        echo "🔧 Workflow Inputs:"
+        echo "  Test Mode: ${{ github.event.inputs.test_mode || 'auto' }}"
+        echo "  ACT Testing: ${{ github.event.inputs.act_testing || 'false' }}"
+        echo "  Debug Mode: ${{ github.event.inputs.debug_mode || 'false' }}"
+        echo "  Event Name: ${{ github.event_name }}"
+        echo "  Repository: ${{ github.repository }}"
+        echo "  Branch: ${{ github.ref_name }}"
+    
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+        fetch-depth: 0
+    
+    - name: Setup Hugo
+      uses: peaceiris/actions-hugo@v2
+      with:
+        hugo-version: ${{ env.HUGO_VERSION }}
+        extended: true
+    
+    - name: Setup Node.js
+      if: ${{ github.event.inputs.test_mode != 'build-only' }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        cache-dependency-path: '**/package-lock.json'
+    
+    - name: Verify Hugo installation
+      run: |
+        echo "✅ Hugo version:"
+        hugo version
+        echo ""
+        echo "✅ Hugo environment:"
+        hugo env
+    
+    - name: Install dependencies (if present)
+      if: ${{ github.event.inputs.test_mode != 'build-only' }}
+      run: |
+        if [ -f package.json ]; then
+          echo "📦 Installing npm dependencies..."
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+        else
+          echo "ℹ️  No package.json found, skipping npm dependencies"
+        fi
+    
+    - name: Lint Hugo configuration
+      if: ${{ github.event.inputs.test_mode != 'build-only' }}
+      run: |
+        echo "🔍 Linting Hugo configuration..."
+        
+        # Check Hugo config syntax
+        hugo config
+        
+        # Validate theme configuration
+        if [ -f themes/PaperMod/theme.toml ] || [ -f themes/PaperMod/config.toml ]; then
+          echo "✅ Theme configuration found"
+        fi
+        
+        # Check for common issues
+        echo "🔍 Checking for common configuration issues..."
+        
+        if grep -q "baseURL.*localhost" config.toml; then
+          echo "⚠️  Warning: baseURL contains localhost"
+        fi
+        
+        if grep -q "draft.*true" content/*.md; then
+          echo "⚠️  Warning: Draft content found"
+        fi
+    
+    - name: Test Hugo build (development)
+      run: |
+        echo "🏗️  Testing Hugo development build..."
+        hugo --buildDrafts --buildFuture --verbose
+        
+        echo "📊 Build statistics:"
+        find public -type f -name "*.html" | wc -l | xargs echo "  HTML files:"
+        find public -type f -name "*.css" | wc -l | xargs echo "  CSS files:"
+        find public -type f -name "*.js" | wc -l | xargs echo "  JS files:"
+        
+        du -sh public/ | xargs echo "  Total size:"
+    
+    - name: Test Hugo build (production)
+      if: ${{ github.event.inputs.test_mode != 'lint-only' }}
+      run: |
+        echo "🚀 Testing Hugo production build..."
+        
+        # Clean previous build
+        rm -rf public/
+        
+        # Production build
+        hugo --minify --environment production --verbose
+        
+        echo "📊 Production build statistics:"
+        find public -type f -name "*.html" | wc -l | xargs echo "  HTML files:"
+        find public -type f -name "*.css" | wc -l | xargs echo "  CSS files:"
+        find public -type f -name "*.js" | wc -l | xargs echo "  JS files:"
+        
+        du -sh public/ | xargs echo "  Total size:"
+    
+    - name: Validate HTML output
+      if: ${{ github.event.inputs.test_mode != 'lint-only' && github.event.inputs.test_mode != 'build-only' }}
+      run: |
+        echo "✅ Validating HTML structure..."
+        
+        # Check for essential pages
+        required_pages=("index.html" "services/index.html" "case-studies/index.html" "about/index.html")
+        
+        for page in "${required_pages[@]}"; do
+          if [ -f "public/$page" ]; then
+            echo "  ✅ $page exists"
+            
+            # Basic HTML validation
+            if grep -q "<title>" "public/$page"; then
+              echo "    ✅ Has title tag"
+            else
+              echo "    ❌ Missing title tag"
+              exit 1
+            fi
+            
+            if grep -q "<meta.*description" "public/$page"; then
+              echo "    ✅ Has meta description"
+            else
+              echo "    ⚠️  Missing meta description"
+            fi
+            
+          else
+            echo "  ❌ $page missing"
+            exit 1
+          fi
+        done
+    
+    - name: Check for broken internal links
+      if: ${{ github.event.inputs.test_mode == 'full' }}
+      run: |
+        echo "🔗 Checking for broken internal links..."
+        
+        # Simple link validation
+        find public -name "*.html" -exec grep -l "href.*404" {} \; | while read file; do
+          echo "⚠️  Potential 404 link in: $file"
+        done
+        
+        # Check for common broken patterns
+        if grep -r "href=\"#\"" public/; then
+          echo "⚠️  Found placeholder links (href=\"#\")"
+        fi
+        
+        echo "✅ Link validation completed"
+    
+    - name: Performance analysis
+      if: ${{ github.event.inputs.test_mode == 'full' }}
+      run: |
+        echo "⚡ Performance analysis..."
+        
+        # File size analysis
+        echo "📁 Largest files:"
+        find public -type f -exec ls -lh {} \; | sort -k5 -hr | head -10
+        
+        # CSS/JS optimization check
+        echo ""
+        echo "🎨 CSS files analysis:"
+        find public -name "*.css" -exec wc -c {} \; | sort -nr | head -5
+        
+        echo ""
+        echo "📜 JS files analysis:"
+        find public -name "*.js" -exec wc -c {} \; | sort -nr | head -5
+    
+    - name: ACT testing summary
+      if: ${{ github.event.inputs.act_testing == 'true' }}
+      run: |
+        echo "🧪 ACT Testing Summary"
+        echo "======================"
+        echo "✅ Hugo build: SUCCESS"
+        echo "✅ Configuration validation: SUCCESS"
+        echo "✅ File structure: SUCCESS"
+        echo ""
+        echo "🎉 ACT testing completed successfully!"
+        echo ""
+        echo "To run this locally with ACT:"
+        echo "  act workflow_dispatch -W .github/workflows/test.yml --input act_testing=true"
+    
+    - name: Upload build artifacts (on failure)
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: hugo-build-logs
+        path: |
+          public/
+          hugo_stats.json
+        retention-days: 7
+    
+    - name: Test summary
+      if: always()
+      run: |
+        echo ""
+        echo "📋 Test Summary"
+        echo "==============="
+        echo "Hugo Version: $(hugo version)"
+        echo "Test Mode: ${{ github.event.inputs.test_mode || 'auto' }}"
+        echo "Build Status: ${{ job.status }}"
+        echo ""
+        
+        if [ "${{ job.status }}" = "success" ]; then
+          echo "🎉 All tests passed!"
+        else
+          echo "❌ Some tests failed. Check the logs above."
+        fi
