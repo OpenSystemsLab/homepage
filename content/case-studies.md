@@ -117,7 +117,7 @@ This hands-on experience ensures every client solution is **proven in practice**
 ---
 
 ## AI-Powered Document Processing Platform
-### Resume Formatting MCP Workflow
+### [Resume Formatting MCP Workflow](https://github.com/OpenSystemsLab/resume-processor-mcp)
 
 **Challenge:** A client needed an intelligent document processing system that could transform resumes from Markdown format into multiple professional outputs (PDF, LaTeX, LinkedIn templates) while maintaining formatting consistency and enabling natural language interaction.
 
@@ -304,4 +304,4 @@ These case studies represent just a sample of the transformational projects Open
 
 From intelligent document processing with natural language interfaces to enterprise-scale cloud transformations, our AI-powered infrastructure solutions consistently deliver measurable results: cost reductions of 40-80%, dramatic improvements in processing times, and enhanced security postures.
 
-**Ready to discuss your project?** [Contact us](mailto:hello@opensystemslab.com) to explore how we can help transform your infrastructure and operations.
+**Ready to discuss your project?** [Contact us](mailto:info@opensystemslab.com) to explore how we can help transform your infrastructure and operations.
