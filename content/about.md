@@ -31,7 +31,7 @@ We don't just implement solutions—we ensure your team can maintain, extend, an
 
 ### AI Integration & Infrastructure
 - **2+ years** specialized experience in generative AI business integration
-- **Model Context Protocol (MCP)** platform development and implementation  
+- **Model Context Protocol (MCP)** platform development and implementation
 - **AI workflow automation** and intelligent decision-making systems
 - **Natural language infrastructure operations** and query interfaces
 
@@ -88,6 +88,6 @@ We work with cutting-edge technologies across the entire infrastructure and AI s
 - AI-enhanced research infrastructure
 
 
-**Email**: [hello@opensystemslab.com](mailto:hello@opensystemslab.com)  
-**Website**: [opensystemslab.com](https://opensystemslab.com)  
+**Email**: [hello@opensystemslab.com](mailto:hello@opensystemslab.com)
+**Website**: [opensystemslab.com](https://opensystemslab.com)
 **GitHub**: [github.com/OpenSystemsLab](https://github.com/OpenSystemsLab)

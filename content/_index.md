@@ -12,9 +12,9 @@ description: "AI Infrastructure, Kubernetes and Cloud Infrastructure Solutions"
 
 ## About Open Systems Lab
 
-Open Systems Lab specializes in helping organizations incorporate **generative AI technology** into existing workflows and infrastructure. With deep expertise in DevOps/GitOps/CI/CD and modern AI integration that enables businesses to adopt AI technology while maintaining operational excellence.
+Open Systems Lab specializes in working with organizations to incorporate **generative AI technology** into existing workflows and infrastructure. With deep expertise in DevOps/GitOps/CI/CD and modern AI integration that enables businesses to adopt AI technology while maintaining operational excellence.
 
-Our solutions typically achieve **80%+ reduction in operational overhead** and dramatic improvements in infrastructure troubleshooting time through intelligent automation.
+The solutions typically achieve **80%+ reduction in operational overhead** and dramatic improvements in infrastructure troubleshooting time through intelligent automation.
 
 ---
 
@@ -22,10 +22,10 @@ Our solutions typically achieve **80%+ reduction in operational overhead** and d
 
 ### 🤖 AI Integration & Infrastructure
 - **Generative AI business integration** and workflow automation
-- **AI adoption strategies** and implementation planning  
+- **AI adoption strategies** and implementation planning
 - **Model Context Protocol (MCP) platforms** for natural language infrastructure operations
 - **AI-powered automation solutions** that reduce troubleshooting time by 80%
-- **Custom AI workflow ** for business process optimization
+- **Custom AI workflow** for business process optimization
 
 ### ☸️ Kubernetes & Cloud Architecture
 - **Enterprise-scale Kubernetes clusters** (EKS, self-hosted, hybrid deployments)
@@ -127,7 +127,7 @@ Our solutions typically achieve **80%+ reduction in operational overhead** and d
 ### Modern Approach
 - **AI-first** infrastructure design
 - **GitOps-driven** automation
-- **Security-integrated** workflows  
+- **Security-integrated** workflows
 - **Cost-optimized** solutions
 
 ### Comprehensive Solutions
@@ -138,6 +138,6 @@ Our solutions typically achieve **80%+ reduction in operational overhead** and d
 
 ---
 
-**Email**: [hello@opensystemslab.com](mailto:hello@opensystemslab.com)  
-**Website**: [opensystemslab.com](https://opensystemslab.com)  
+**Email**: [hello@opensystemslab.com](mailto:hello@opensystemslab.com)
+**Website**: [opensystemslab.com](https://opensystemslab.com)
 **GitHub**: [github.com/OpenSystemsLab](https://github.com/OpenSystemsLab)

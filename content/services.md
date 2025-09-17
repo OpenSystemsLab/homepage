@@ -7,12 +7,12 @@ weight: 10
 
 # Capabilities
 
-Open Systems Lab provides comprehensive AI infrastructure and cloud solutions designed to modernize your operations while reducing costs and complexity.
+Open Systems Lab provides comprehensive AI infrastructure and cloud solutions designed to modernize operations while reducing costs and complexity.
 
 ## AI Integration & Infrastructure
 
 ### Generative AI Business Integration
-Transform your business processes with intelligent automation that learns and adapts to your workflows.
+Transform processes with intelligent automation that learns and adapts to workflows.
 
 **Key Deliverables:**
 - AI workflow automation implementation
@@ -43,7 +43,7 @@ Comprehensive planning and implementation roadmaps for AI technology adoption.
 ## Cloud Infrastructure & Kubernetes
 
 ### Enterprise Kubernetes Solutions
-Design and deploy production-ready Kubernetes clusters tailored to your specific requirements.
+Design and deploy production-ready Kubernetes clusters tailored to specific requirements.
 
 **Deployment Options:**
 - **Amazon EKS**: Managed Kubernetes with AWS integration
@@ -74,7 +74,7 @@ Cost-effective serverless architectures using modern platforms and technologies.
 ## DevOps & GitOps Automation
 
 ### CI/CD Pipeline Engineering
-Modern continuous integration and deployment pipelines that scale with your organization.
+Modern continuous integration and deployment pipelines that scale with organization.
 
 **Pipeline Features:**
 - Matrix-based builds for multiple platforms
