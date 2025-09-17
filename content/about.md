@@ -1,17 +1,17 @@
 ---
 title: "About"
-description: "Learn about Open Systems Lab's mission, expertise, and approach to AI infrastructure consulting"
+description: "Learn about Open Systems Lab's mission, expertise, and approach to AI infrastructure"
 menu: main
 weight: 30
 ---
 
 # About Open Systems Lab
 
-Open Systems Lab is a specialized AI infrastructure consulting firm dedicated to helping organizations bridge the gap between traditional infrastructure automation and modern AI-powered solutions. We combine deep expertise in DevOps, cloud platforms, and emerging AI technologies to deliver transformational results for our clients.
+Open Systems Lab specializes in bridging the gap between traditional infrastructure automation and modern AI-powered solutions. We combine deep expertise in DevOps, cloud platforms, and emerging AI technologies to build transformational infrastructure.
 
 ## Our Mission
 
-We believe that the future of infrastructure lies in intelligent automation that adapts, learns, and optimizes continuously. Our mission is to make AI-powered infrastructure accessible to organizations of all sizes, enabling them to achieve operational excellence while reducing complexity and costs.
+The future of infrastructure lies in intelligent automation that adapts, learns, and optimizes continuously. We make AI-powered infrastructure accessible to organizations of all sizes, enabling them to achieve operational excellence while reducing complexity and costs.
 
 ## Our Approach
 
@@ -29,7 +29,7 @@ We don't just implement solutions—we ensure your team can maintain, extend, an
 
 ## Core Expertise
 
-### AI Integration & Consulting
+### AI Integration & Infrastructure
 - **2+ years** specialized experience in generative AI business integration
 - **Model Context Protocol (MCP)** platform development and implementation  
 - **AI workflow automation** and intelligent decision-making systems
@@ -65,7 +65,7 @@ We work with cutting-edge technologies across the entire infrastructure and AI s
 
 **Security**: DevSecOps scanning, container security, vulnerability assessment, compliance automation
 
-## Industries We Serve
+## Industries
 
 ### Financial Services
 - SWIFT-compliant infrastructure implementations
@@ -87,45 +87,6 @@ We work with cutting-edge technologies across the entire infrastructure and AI s
 - Secure data processing pipelines
 - AI-enhanced research infrastructure
 
-## Our Values
-
-### Innovation with Stability
-We embrace cutting-edge technologies while maintaining operational stability and reliability. Every solution we deliver is built to last and scale with your organization's needs.
-
-### Transparency and Collaboration
-We believe in open communication and collaborative partnerships. Our clients are fully informed throughout every project phase, with access to comprehensive documentation and regular progress updates.
-
-### Continuous Learning
-The technology landscape evolves rapidly, and so do we. We invest continuously in learning new technologies, methodologies, and best practices to ensure our clients benefit from the latest innovations.
-
-### Measurable Results
-Every project we undertake is designed to deliver quantifiable improvements in efficiency, cost, security, or performance. We track and report on key metrics to ensure our solutions provide real business value.
-
-## Why Choose Open Systems Lab
-
-### Proven Track Record
-Our portfolio includes successful implementations across diverse industries, consistently delivering cost reductions of 40-80% and dramatic improvements in operational efficiency.
-
-### Comprehensive Expertise
-We combine traditional infrastructure expertise with modern AI capabilities, providing end-to-end solutions that address both current needs and future requirements.
-
-### Personalized Service
-As a specialized consulting firm, we provide personalized attention and customized solutions tailored to your specific challenges and objectives.
-
-### Long-term Partnership
-We view our client relationships as long-term partnerships, providing ongoing support, optimization, and guidance as your infrastructure needs evolve.
-
-## Our Commitment
-
-At Open Systems Lab, we're committed to democratizing access to AI-powered infrastructure solutions. Whether you're a startup looking to build scalable foundations or an enterprise seeking to modernize legacy systems, we have the expertise and experience to guide your transformation journey.
-
-We believe that the convergence of traditional infrastructure automation and modern AI capabilities represents the next evolution in how organizations manage and optimize their technology platforms. Our role is to make this evolution accessible, practical, and valuable for businesses of all sizes.
-
-## Get Started
-
-Ready to explore how AI-powered infrastructure can transform your operations? We'd love to discuss your specific challenges and objectives.
-
-**Contact us** today to schedule a consultation and learn how Open Systems Lab can help your organization achieve its infrastructure and automation goals.
 
 **Email**: [hello@opensystemslab.com](mailto:hello@opensystemslab.com)  
 **Website**: [opensystemslab.com](https://opensystemslab.com)  

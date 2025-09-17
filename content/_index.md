@@ -1,10 +1,10 @@
 ---
 title: "Open Systems Lab"
-description: "AI Infrastructure Consulting - Kubernetes and Cloud Infrastructure Solutions"
+description: "AI Infrastructure, Kubernetes and Cloud Infrastructure Solutions"
 ---
 
 # Open Systems Lab
-## AI Infrastructure Consulting & Cloud Solutions
+## AI Infrastructure & Cloud Solutions
 
 **Bridging traditional infrastructure with AI-powered automation**
 
@@ -12,20 +12,20 @@ description: "AI Infrastructure Consulting - Kubernetes and Cloud Infrastructure
 
 ## About Open Systems Lab
 
-Open Systems Lab specializes in helping organizations incorporate **generative AI technology** into existing workflows and infrastructure. With deep expertise in DevOps/GitOps/CI/CD and modern AI integration, we enable businesses to adopt AI technology while maintaining operational excellence.
+Open Systems Lab specializes in helping organizations incorporate **generative AI technology** into existing workflows and infrastructure. With deep expertise in DevOps/GitOps/CI/CD and modern AI integration that enables businesses to adopt AI technology while maintaining operational excellence.
 
 Our solutions typically achieve **80%+ reduction in operational overhead** and dramatic improvements in infrastructure troubleshooting time through intelligent automation.
 
 ---
 
-## Our Services
+## Capabilities
 
-### 🤖 AI Integration & Infrastructure Consulting
+### 🤖 AI Integration & Infrastructure
 - **Generative AI business integration** and workflow automation
 - **AI adoption strategies** and implementation planning  
 - **Model Context Protocol (MCP) platforms** for natural language infrastructure operations
 - **AI-powered automation solutions** that reduce troubleshooting time by 80%
-- **Custom AI workflow consulting** for business process optimization
+- **Custom AI workflow ** for business process optimization
 
 ### ☸️ Kubernetes & Cloud Architecture
 - **Enterprise-scale Kubernetes clusters** (EKS, self-hosted, hybrid deployments)
@@ -52,7 +52,7 @@ Our solutions typically achieve **80%+ reduction in operational overhead** and d
 ## Featured Capabilities
 
 ### AI-Powered Infrastructure Platform
-We build **enterprise-grade MCP platforms** with specialized microservices for cloud operations:
+**Enterprise-grade MCP platforms** with specialized microservices for cloud operations:
 
 - **AWS Integration**: Real-time security analysis across VPC, EC2, S3, IAM with automated vulnerability detection
 - **Azure Optimization**: Advanced container optimization achieving 90%+ size reduction
@@ -74,7 +74,7 @@ We build **enterprise-grade MCP platforms** with specialized microservices for c
 
 ---
 
-## Industries We Serve
+### Industries
 
 ### Financial Technology
 - SWIFT-compliant AWS infrastructure
@@ -116,7 +116,7 @@ We build **enterprise-grade MCP platforms** with specialized microservices for c
 
 ---
 
-## Why Choose Open Systems Lab
+### Contact
 
 ### Proven Experience
 - **10+ years** of DevOps/GitOps expertise
@@ -137,12 +137,6 @@ We build **enterprise-grade MCP platforms** with specialized microservices for c
 - Knowledge transfer and training
 
 ---
-
-## Get Started
-
-Ready to transform your infrastructure with AI-powered solutions? Open Systems Lab can help your organization adopt modern cloud and AI technologies while maintaining operational excellence.
-
-**Contact us** to discuss your specific requirements and learn how our proven methodologies can benefit your business.
 
 **Email**: [hello@opensystemslab.com](mailto:hello@opensystemslab.com)  
 **Website**: [opensystemslab.com](https://opensystemslab.com)  
