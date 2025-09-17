@@ -1,20 +1,20 @@
 ---
 title: "Case Studies"
-description: "Real-world results from our AI infrastructure and cloud consulting projects"
+description: "Real-world results from our AI infrastructure and cloud projects"
 menu: main
 weight: 20
 ---
 
 # Case Studies
 
-Discover how Open Systems Lab has helped organizations transform their infrastructure, reduce costs, and improve operational efficiency through AI-powered automation and modern cloud architectures.
+Discover how Open Systems Lab helps organizations transform their infrastructure, reduce costs, and improve operational efficiency through AI-powered automation and modern cloud architectures.
 
 ## Open Systems Lab Website: Eating Our Own Dog Food
 ### Complete CI/CD Implementation with CDN Security Strategy
 
 **Philosophy:** At Open Systems Lab, we believe in "eating our own dog food" - implementing the same high-quality CI/CD solutions and security practices for our own infrastructure that we deliver to our clients. Our website serves as a living demonstration of our DevSecOps expertise and modern security architecture.
 
-**Challenge:** As an AI infrastructure consulting firm, we needed our own website to exemplify the modern CI/CD practices, security-first approach, and attack surface mitigation that we advocate for our clients. This includes protecting against emerging threats like AI crawling abuse and traditional DDoS attacks.
+Challenge: Our own website needed to exemplify the modern CI/CD practices, security-first approach, and attack surface mitigation that we advocate. This includes protecting against emerging threats like AI crawling abuse and traditional DDoS attacks.
 
 **Our Solution:** We built our website using the exact same methodologies, tools, and security practices that we implement for enterprise clients, creating a real-world reference implementation of our complete service offerings.
 
@@ -78,7 +78,7 @@ Discover how Open Systems Lab has helped organizations transform their infrastru
 
 **Client Demonstration Value:**
 
-This implementation serves as **proof-of-concept** for enterprise clients:
+This implementation serves as a proof-of-concept for enterprise applications:
 
 1. **Modern Security Architecture**: CDN-first approach with comprehensive threat protection
 2. **AI-Era Threat Management**: Proactive protection against AI crawling and automated abuse
@@ -298,10 +298,3 @@ This hands-on experience ensures every client solution is **proven in practice**
 
 ---
 
-## Getting Started
-
-These case studies represent just a sample of the transformational projects Open Systems Lab has delivered. Each solution is tailored to specific organizational needs while leveraging proven methodologies and cutting-edge technologies.
-
-From intelligent document processing with natural language interfaces to enterprise-scale cloud transformations, our AI-powered infrastructure solutions consistently deliver measurable results: cost reductions of 40-80%, dramatic improvements in processing times, and enhanced security postures.
-
-**Ready to discuss your project?** [Contact us](mailto:info@opensystemslab.com) to explore how we can help transform your infrastructure and operations.

@@ -1,15 +1,15 @@
 ---
-title: "Services"
+title: "Capabilities"
 description: "Comprehensive AI Infrastructure and Cloud Solutions"
 menu: main
 weight: 10
 ---
 
-# Our Services
+# Capabilities
 
-Open Systems Lab provides comprehensive AI infrastructure consulting and cloud solutions designed to modernize your operations while reducing costs and complexity.
+Open Systems Lab provides comprehensive AI infrastructure and cloud solutions designed to modernize your operations while reducing costs and complexity.
 
-## AI Integration & Consulting
+## AI Integration & Infrastructure
 
 ### Generative AI Business Integration
 Transform your business processes with intelligent automation that learns and adapts to your workflows.
@@ -156,30 +156,3 @@ Continuous performance monitoring and optimization recommendations.
 
 ---
 
-## Support & Maintenance
-
-### Ongoing Support
-Continuous support and optimization services to ensure your infrastructure remains efficient and secure.
-
-**Support Levels:**
-- 24/7 monitoring and alerting
-- Incident response and resolution
-- Regular security updates
-- Performance optimization reviews
-
-### Training & Knowledge Transfer
-Comprehensive training programs to ensure your team can effectively manage and extend the solutions we implement.
-
-**Training Options:**
-- Custom workshops and bootcamps
-- Documentation and runbooks
-- Mentorship programs
-- Certification assistance
-
----
-
-## Getting Started
-
-Ready to transform your infrastructure? Contact Open Systems Lab to discuss your specific requirements and learn how our proven methodologies can benefit your organization.
-
-**[Contact Us](mailto:hello@opensystemslab.com)** to schedule a consultation.
